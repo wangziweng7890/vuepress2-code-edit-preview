@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useClipboard, useToggle } from '@vueuse/core'
+import { useToggle } from '@vueuse/core'
 const props = defineProps<{
     demos: object
     source: string
@@ -50,10 +50,22 @@ const props = defineProps<{
     rawSource: string
     description?: string
 }>()
-const { copy } = useClipboard({
-    source: decodeURIComponent(props.rawSource),
-    read: false,
-})
+function copy(content) {
+    const textarea = document.createElement('textarea')
+    textarea.readOnly = true
+    textarea.style.position = 'absolute'
+    textarea.style.left = '-9999px'
+    // 将要 copy 的值赋给 textarea 标签的 value 属性
+    textarea.value = content
+    // 将 textarea 插入到 body 中
+    document.body.appendChild(textarea)
+    // 选中值并复制
+    textarea.select()
+    textarea.setSelectionRange(0, textarea.value.length)
+    const result = document.execCommand('copy')
+    document.body.removeChild(textarea)
+    return result
+}
 let hovering = ref(false);
 let copyMessage = ref('复制代码');
 
@@ -63,10 +75,10 @@ const formatPathDemos = computed(() => {
     return props.demos
 })
 const iconClass = computed(() => {
-    return sourceVisible ? '▲' : '▼';
+    return sourceVisible.value ? '▲' : '▼';
 })
 const controlText = computed(() => {
-    return sourceVisible ? '隐藏代码' : '显示代码';
+    return sourceVisible.value ? '隐藏代码' : '显示代码';
 })
 
 const decodedDescription = computed(() =>
@@ -77,7 +89,7 @@ const decodedCode = computed(() =>
 )
 
 async function handleCopy() {
-    await copy();
+    copy(decodeURIComponent(props.rawSource));
     copyMessage.value = '复制成功🎉';
     setTimeout(() => {
         copyMessage.value = '复制代码';
@@ -98,15 +110,15 @@ function handleCodeView() {
     padding: 20px;
     border-radius: 3px;
     transition: 0.3s;
-    .code-slide-enter,
-    .code-slide-enter-active,
-    .code-slide-leave,
-    .code-slide-leave-active {
-        transition:
-            0.3s max-height ease-in-out,
-            0.3s padding-top ease-in-out,
-            0.3s padding-bottom ease-in-out;
-    }
+    // .code-slide-enter,
+    // .code-slide-enter-active,
+    // .code-slide-leave,
+    // .code-slide-leave-active {
+    //     transition:
+    //         0.3s max-height ease-in-out,
+    //         0.3s padding-top ease-in-out,
+    //         0.3s padding-bottom ease-in-out;
+    // }
     .example {
         margin-bottom: 20px;
     }
@@ -176,14 +188,14 @@ function handleCodeView() {
         &.is-fixed {
             position: sticky;
             top: 0;
-            bottom: 20px;
+            bottom: 0px;
         }
         >i {
             position: absolute;
             transform: translateX(-30px);
             font-size: 14px;
             line-height: 44px;
-            transition: 0.3s;
+            // transition: 0.3s;
             display: inline-block;
             color: #1f93ff;
         }

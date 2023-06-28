@@ -2,8 +2,8 @@ import path from 'path'
 import fs from 'fs'
 import MarkdownIt from 'markdown-it'
 import mdContainer from 'markdown-it-container'
-import tag from '../plugins/tag'
-// import { highlight } from '../utils/highlight'
+import tag from './tag.js'
+import { highlight } from '../utils/highlight.js'
 import type Token from 'markdown-it/lib/token'
 import type Renderer from 'markdown-it/lib/renderer'
 
@@ -44,7 +44,7 @@ export const mdPlugin = (md: MarkdownIt, app) => {
         if (!source) throw new Error(`Incorrect source file: ${sourceFile}`)
 
         return `<Demo :demos="demos" source="${encodeURIComponent(
-          source
+          highlight(source, 'vue')
         )}" path="${sourceFile.split('/')[1]}" raw-source="${encodeURIComponent(
           source
         )}" description="${encodeURIComponent(localMd.render(description))}">`
