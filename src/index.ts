@@ -13,7 +13,7 @@ export default function preview2edit() {
         name: 'code-demo-edit',
         multiple: false,
         alias: {
-            '@docs': path.resolve(process.env.PWD, 'docs'),
+            '@docs': path.resolve(process.cwd(), 'docs'),
         },
         extendsMarkdown: async (md: MarkdownIt, app) => {
             mdPlugin(md, app)
