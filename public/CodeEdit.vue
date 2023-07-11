@@ -47,9 +47,9 @@ export default {
   <ClientOnly>
     <div class="kf-preview-block">
       <div class="operate-container">
-        <span class="btn" @click="handleRun"> 运行(ctrl + s) </span>
-        <span class="btn" @click="handleReset"> 重置代码 </span>
-        <span class="btn" @click="handleRefresh"> 刷新效果 </span>
+        <span class="btn-0" @click="handleRun"> 运行(ctrl + s) </span>
+        <span class="btn-0" @click="handleReset"> 重置代码 </span>
+        <span class="btn-0" @click="handleRefresh"> 刷新效果 </span>
       </div>
       <div class="preview-panel">
         <div class="preview-source" @keydown.ctrl.s="onCtrlSClick">
@@ -80,7 +80,7 @@ iframe {
 }
 
 /* 重新样式 ===============end============= */
-.kf-preview-block .btn {
+.kf-preview-block .btn-0 {
     color: #1f93ff;
     cursor: pointer;
     margin-left: 16px;

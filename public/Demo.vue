@@ -5,7 +5,7 @@
         <div class="kf-demo-block" :class="[{ hover: hovering }]" @mouseenter="hovering = true"
             @mouseleave="hovering = false">
             <!-- danger here DO NOT USE INLINE SCRIPT TAG -->
-            <p text="sm" v-html="decodedDescription" />
+            <p text="sm" class="description-sm" v-html="decodedDescription" />
 
             <div class="example">
                 <component :is="formatPathDemos[path]"></component>
@@ -21,15 +21,15 @@
                     <i v-show="hovering || sourceVisible">{{ iconClass }}</i>
                 </transition>
                 <transition name="text-slide">
-                    <span v-show="hovering || sourceVisible" class="btn">{{ controlText }}</span>
+                    <span v-show="hovering || sourceVisible" class="btn-0">{{ controlText }}</span>
                 </transition>
                 <div class="control-button-container">
-                    <span v-show="hovering || sourceVisible" size="small" type="text" class="control-button copy-button btn"
+                    <span v-show="hovering || sourceVisible" size="small" type="text" class="control-button copy-button btn-0"
                         @click.stop="handleCopy">
                         {{ copyMessage }}
                     </span>
                     <transition name="text-slide">
-                        <span v-show="hovering || sourceVisible" class="control-button run-online-button btn"
+                        <span v-show="hovering || sourceVisible" class="control-button run-online-button btn-0"
                             @click.stop="handleCodeView">
                             在线运行
                         </span>
@@ -119,10 +119,15 @@ function handleCodeView() {
     //         0.3s padding-top ease-in-out,
     //         0.3s padding-bottom ease-in-out;
     // }
+
+    .description-sm {
+        margin-bottom: 1em;
+    }
+    
     .example {
         margin-bottom: 20px;
     }
-    .btn {
+    .btn-0 {
         color: #1f93ff;
         cursor: pointer;
         margin-left: 16px;
@@ -130,7 +135,7 @@ function handleCodeView() {
     &.hover {
         box-shadow: 0 0 8px 0 rgb(232 237 250 / 60%), 0 2px 4px 0 rgb(232 237 250 / 50%);
     }
-    code {
+    .language-vue code {
         font-family: Menlo, Monaco, Consolas, Courier, monospace;
     }
     .demo-button {

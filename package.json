@@ -1,6 +1,6 @@
 {
   "name": "vuepress-plugin-demo-block-edit",
-  "version": "2.0.0-beta.61",
+  "version": "2.0.0-beta.63",
   "description": "Vuepress plugin for demo-block & code-edit",
   "license": "MIT",
   "keywords": [
